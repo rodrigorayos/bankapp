@@ -23,9 +23,6 @@ public class AuthController {
 
     @PostMapping("/register")
     public User register(@RequestBody CreateFullUserRequest request) {
-        // reutiliza CreateUserUseCase si quieres
-        // código de creación ya lo tienes
-        // se puede delegar o escribir aquí directamente
         return userService.save(new User(/* mapear de request */));
     }
 
