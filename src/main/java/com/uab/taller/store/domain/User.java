@@ -15,9 +15,10 @@ public class User {
     String email;
     String password;
 
-    @OneToOne
-    @JoinColumn(name = "profile_id")
-    Profile profile;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    private Profile profile;
+
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Account> accounts;
