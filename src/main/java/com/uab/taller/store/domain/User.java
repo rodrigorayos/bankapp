@@ -25,7 +25,7 @@ public class User {
     private Boolean deleted;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_id", referencedColumnName = "profileId")
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private Profile profile;
 
     @OneToMany(mappedBy = "user")

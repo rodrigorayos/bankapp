@@ -1,5 +1,6 @@
 package com.uab.taller.store.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,5 +20,6 @@ public class Rol {
     private String description;
 
     @OneToMany(mappedBy = "rol")
+    @JsonIgnore
     private List<User> users;
 }

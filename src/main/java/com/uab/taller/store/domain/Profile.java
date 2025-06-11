@@ -1,5 +1,6 @@
 package com.uab.taller.store.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,8 +26,10 @@ public class Profile {
     private String ci;
     private String mobile;
     private String address;
-    private String status; // Activo o Inactivo
+    private String status;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "profile")
     private User user;
+
 }

@@ -14,4 +14,6 @@ public class CreateFullUserRequest {
     String gender;
     String email;
     String password;
+    private String roleName;
+
 }
