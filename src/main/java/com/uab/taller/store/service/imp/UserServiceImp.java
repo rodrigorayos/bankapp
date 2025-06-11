@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public class UserServiceImp implements IUserService {
 
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserServiceImp(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -39,11 +39,11 @@ public class UserServiceImp implements IUserService {
 
     @Override
     public User update(Long id, User user) {
-        User existingUser = userRepository.findById(id).orElse(null);
-        if (existingUser != null) {
-            existingUser.setEmail(user.getEmail());
-            existingUser.setPassword(user.getPassword());
-            return userRepository.save(existingUser);
+        User existing = userRepository.findById(id).orElse(null);
+        if (existing != null) {
+            existing.setEmail(user.getEmail());
+            existing.setPassword(user.getPassword());
+            return userRepository.save(existing);
         }
         return null;
     }

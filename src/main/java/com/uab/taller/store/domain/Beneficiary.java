@@ -7,25 +7,22 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Account {
+public class Beneficiary {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String number;
-    private String currencyType; // Moneda: USD, BOB, etc.
-    private String type;         // Tipo: Ahorro, Corriente, etc.
-    private Double balance;
-    private String status;       // Activo/Inactivo
-
     private String addDate;
     private String addUser;
-    private String changeDate;
     private String changeUser;
     private Boolean deleted;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
 }

@@ -10,6 +10,6 @@ public interface IUserService {
     User getById(Long id);
     void deleteById(Long id);
     User save(User user);
-    User update(Long id,User user);
+    User update(Long id, User user);
     Optional<User> getUserByEmail(String email);
 }

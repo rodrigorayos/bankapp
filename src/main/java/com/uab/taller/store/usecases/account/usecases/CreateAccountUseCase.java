@@ -1,4 +1,4 @@
-    package com.uab.taller.store.usecase.account.usecases;
+    package com.uab.taller.store.usecases.account.usecases;
 
     import com.uab.taller.store.domain.Account;
     import com.uab.taller.store.domain.User;

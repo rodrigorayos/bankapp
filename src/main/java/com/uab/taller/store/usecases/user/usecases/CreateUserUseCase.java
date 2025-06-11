@@ -1,11 +1,9 @@
-package com.uab.taller.store.usecase.user.usecases;
+package com.uab.taller.store.usecases.user.usecases;
 
 import com.uab.taller.store.domain.Profile;
 import com.uab.taller.store.domain.User;
 import com.uab.taller.store.domain.dto.request.CreateFullUserRequest;
-import com.uab.taller.store.domain.dto.request.UserRequest;
 import com.uab.taller.store.repository.ProfileRepository;
-import com.uab.taller.store.service.IAccountService;
 import com.uab.taller.store.service.IProfileService;
 import com.uab.taller.store.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;

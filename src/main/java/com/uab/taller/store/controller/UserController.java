@@ -1,69 +1,55 @@
 package com.uab.taller.store.controller;
 
-
 import com.uab.taller.store.domain.User;
 import com.uab.taller.store.domain.dto.request.CreateFullUserRequest;
 import com.uab.taller.store.domain.dto.request.UserRequest;
-import com.uab.taller.store.service.IUserService;
-import com.uab.taller.store.usecase.user.usecases.*;
-import io.swagger.v3.oas.annotations.Operation;
+import com.uab.taller.store.usecases.user.usecases.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/users")
-
-public class  UserController {
-
-    @Autowired
-    IUserService userService;
+@RequestMapping("/api/users")
+public class UserController {
 
     @Autowired
-    GetAllUsersUseCase getAllUsersUseCase;
-    @Autowired
-    GetUserByIdUseCase getUserByIdUseCase;
-    @Autowired
-    CreateUserUseCase createUserUseCase;
-    @Autowired
-    DeleteUserUseCase deleteUserUseCase;
-    @Autowired
-    UpdateUserUseCase updateUserUseCase;
-    @Autowired
-    GetUserByEmailUseCase getUserByEmailUserCase;
+    private CreateUserUseCase createUserUseCase;
 
+    @Autowired
+    private GetAllUsersUseCase getAllUserUseCase;
 
-    @GetMapping()
+    @Autowired
+    private GetUserByIdUseCase getUserByIdUseCase;
+
+    @Autowired
+    private UpdateUserUseCase updateUserUseCase;
+
+    @Autowired
+    private DeleteUserUseCase deleteUserUseCase;
+
+    @PostMapping
+    public User create(@RequestBody CreateFullUserRequest request) {
+        return createUserUseCase.execute(request);
+    }
+
+    @GetMapping
     public List<User> getAll() {
-        return getAllUsersUseCase.execute();
+        return getAllUserUseCase.execute();
     }
 
-
-    @GetMapping(value = "/{userId}")
-    public User getById(@PathVariable Long userId) {
-        return getUserByIdUseCase.execute(userId);
+    @GetMapping("/{id}")
+    public User getById(@PathVariable Long id) {
+        return getUserByIdUseCase.execute(id);
     }
 
-    @GetMapping(value = "/email/{email:.+}")
-    public User getByEmail(@PathVariable String email) {
-        return getUserByEmailUserCase.execute(email)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
-    }
-    @DeleteMapping("/{userId}")
-    public void deleteById(@PathVariable Long userId) {
-        deleteUserUseCase.execute(userId);
+    @PutMapping("/{id}")
+    public User update(@PathVariable Long id, @RequestBody UserRequest request) {
+        return updateUserUseCase.execute(id, request);
     }
 
-    @PostMapping("")
-    public User save(@RequestBody CreateFullUserRequest createUserRequest) {
-        return createUserUseCase.execute(createUserRequest);
-    }
-
-    @PutMapping("/{userId}")
-    public User update(@PathVariable Long userId, @RequestBody UserRequest userRequest) {
-        return updateUserUseCase.execute(userId, userRequest);
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        deleteUserUseCase.execute(id);
     }
 }

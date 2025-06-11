@@ -2,56 +2,53 @@ package com.uab.taller.store.controller;
 
 import com.uab.taller.store.domain.Profile;
 import com.uab.taller.store.domain.dto.request.ProfileRequest;
-import com.uab.taller.store.service.IProfileService;
-import com.uab.taller.store.usecase.profile.usecases.*;
+import com.uab.taller.store.usecases.profile.usecases.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(value="/profile")
+@RequestMapping("/api/profiles")
 public class ProfileController {
 
     @Autowired
-    IProfileService profileService;
+    private CreateProfileUseCase createProfileUseCase;
+
     @Autowired
-    GetAllProfilesUseCase getAllProfilesUseCase;
+    private GetAllProfilesUseCase getAllProfileUseCase;
+
     @Autowired
-    GetProfileByIdUseCase getProfileByIsUseCase;
-    @Autowired
-    CreateProfileUseCase createProfileUseCase;
-    @Autowired
-    DeleteProfileUseCase deleteProfileUseCase;
+    private GetProfileByIdUseCase getProfileByIdUseCase;
+
     @Autowired
     private UpdateProfileUseCase updateProfileUseCase;
 
-    //CREATE "C"
-    @PostMapping ("")
-    public Profile save(@RequestBody ProfileRequest  profileRequest){
-        return createProfileUseCase.execute(profileRequest);
+    @Autowired
+    private DeleteProfileUseCase deleteProfileUseCase;
+
+    @PostMapping
+    public Profile create(@RequestBody ProfileRequest request) {
+        return createProfileUseCase.execute(request);
     }
 
-    //READ "R"
-    @GetMapping()
-    public List<Profile> getAll(){
-        return getAllProfilesUseCase.execute();
+    @GetMapping
+    public List<Profile> getAll() {
+        return getAllProfileUseCase.execute();
     }
 
-    @GetMapping(value = "/{profileId}")
-    public Profile getById(@PathVariable Long profileId){
-        return getProfileByIsUseCase.execute(profileId);
+    @GetMapping("/{id}")
+    public Profile getById(@PathVariable Long id) {
+        return getProfileByIdUseCase.execute(id);
     }
 
-    //UPDATE "U"
-    @PutMapping("/{profileId}")
-    public Profile update(@PathVariable Long profileId, @RequestBody ProfileRequest profileRequest) {
-        return updateProfileUseCase.execute(profileId,profileRequest);
+    @PutMapping("/{id}")
+    public Profile update(@PathVariable Long id, @RequestBody ProfileRequest request) {
+        return updateProfileUseCase.execute(id, request);
     }
 
-    //DELETE "D"
-    @DeleteMapping("/{profileId}")
-    public void deleteById(@PathVariable Long profileId) {
-        deleteProfileUseCase.execute(profileId);
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        deleteProfileUseCase.execute(id);
     }
 }

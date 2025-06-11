@@ -1,4 +1,4 @@
-package com.uab.taller.store.usecase.user.usecases;
+package com.uab.taller.store.usecases.user.usecases;
 
 import com.uab.taller.store.domain.User;
 import com.uab.taller.store.domain.dto.request.UserRequest;
@@ -12,11 +12,10 @@ public class UpdateUserUseCase {
     @Autowired
     IUserService userService;
 
-    public User execute(Long userId, UserRequest userRequest) {
-        User userToUpdate = new User();
-        userToUpdate.setId(userId);
-        userToUpdate.setEmail(userRequest.getEmail());
-        userToUpdate.setPassword(userRequest.getPassword());
-        return userService.save(userToUpdate);
+    public User execute(Long id, UserRequest request) {
+        User user = new User();
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
+        return userService.update(id, user);
     }
 }

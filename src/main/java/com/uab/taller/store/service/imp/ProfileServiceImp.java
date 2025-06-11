@@ -4,12 +4,13 @@ import com.uab.taller.store.domain.Profile;
 import com.uab.taller.store.repository.ProfileRepository;
 import com.uab.taller.store.service.IProfileService;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 public class ProfileServiceImp implements IProfileService {
 
-    ProfileRepository profileRepository;
+    private final ProfileRepository profileRepository;
 
     public ProfileServiceImp(ProfileRepository profileRepository) {
         this.profileRepository = profileRepository;
@@ -41,8 +42,10 @@ public class ProfileServiceImp implements IProfileService {
         if (existing != null) {
             existing.setName(profile.getName());
             existing.setLastName(profile.getLastName());
-            existing.setBirthDate(profile.getBirthDate());
-            existing.setGender(profile.getGender());
+            existing.setCi(profile.getCi());
+            existing.setMobile(profile.getMobile());
+            existing.setAddress(profile.getAddress());
+            existing.setStatus(profile.getStatus());
             return profileRepository.save(existing);
         }
         return null;

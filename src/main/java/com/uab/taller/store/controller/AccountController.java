@@ -2,51 +2,53 @@ package com.uab.taller.store.controller;
 
 import com.uab.taller.store.domain.Account;
 import com.uab.taller.store.domain.dto.request.AccountRequest;
-import com.uab.taller.store.service.IAccountService;
-import com.uab.taller.store.usecase.account.usecases.*;
+import com.uab.taller.store.usecases.account.usecases.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/accountes")
+@RequestMapping("/api/accounts")
 public class AccountController {
+
     @Autowired
-    IAccountService accountService;
+    private CreateAccountUseCase createAccountUseCase;
+
     @Autowired
-    CreateAccountUseCase createAccountUseCase;
+    private GetAllAccountUseCase getAllAccountUseCase;
+
     @Autowired
-    GetAllAccountUseCase getAllAccountUseCase;
-    @Autowired
-    GetAccountByIdUseCase getAccountByIdUseCase;
-    @Autowired
-    DeleteAccountUseCase deleteAccountUseCase;
+    private GetAccountByIdUseCase getAccountByIdUseCase;
+
     @Autowired
     private UpdateAccountUseCase updateAccountUseCase;
 
-    @PostMapping("")
-    public Account save(@RequestBody AccountRequest accountRequest) {
-        return createAccountUseCase.execute(accountRequest);
+    @Autowired
+    private DeleteAccountUseCase deleteAccountUseCase;
+
+    @PostMapping
+    public Account create(@RequestBody AccountRequest request) {
+        return createAccountUseCase.execute(request);
     }
 
-    @GetMapping()
-    public List<Account> getAllAccounts() {
+    @GetMapping
+    public List<Account> getAll() {
         return getAllAccountUseCase.execute();
     }
 
-    @GetMapping(value="/{accountId}")
-    public Account getAccountById(@PathVariable Long accountId) {
-        return getAccountByIdUseCase.execute(accountId);
+    @GetMapping("/{id}")
+    public Account getById(@PathVariable Long id) {
+        return getAccountByIdUseCase.execute(id);
     }
 
-    @PutMapping("/{accountId}")
-    public Account updateAccount(@PathVariable Long accountId, @RequestBody AccountRequest accountRequest) {
-        return updateAccountUseCase.execute(accountId, accountRequest);
+    @PutMapping("/{id}")
+    public Account update(@PathVariable Long id, @RequestBody AccountRequest request) {
+        return updateAccountUseCase.execute(id, request);
     }
 
-    @DeleteMapping("/{accountId}")
-    public void deleteAccount(@PathVariable Long accountId) {
-        deleteAccountUseCase.execute(accountId);
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        deleteAccountUseCase.execute(id);
     }
 }

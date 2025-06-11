@@ -1,4 +1,4 @@
-package com.uab.taller.store.usecase.user.usecases;
+package com.uab.taller.store.usecases.user.usecases;
 
 import com.uab.taller.store.domain.User;
 import com.uab.taller.store.service.IUserService;
